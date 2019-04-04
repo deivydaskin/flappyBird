@@ -27,6 +27,7 @@ var velocityBirdY = 0.3;
 var accelerateY = 0.1;
 
 document.addEventListener('keydown', moveUp);
+document.addEventListener('touchstart', moveUp);
 
 function moveUp() {
 	velocityBirdY = -1;
