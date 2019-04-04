@@ -1,107 +1,75 @@
-import React, { Component } from 'react';
-import bird from './images/bird.png';
-import post from './images/Untitled.png';
-import './App.css';
-import { delay } from 'q';
+var cvs = document.getElementById('canvas');
+var ctx = cvs.getContext('2d');
 
+var bird = new Image();
+var backGround = new Image();
+var floor = new Image();
+var pipeNorth = new Image();
+var pipeSouth = new Image();
 
+bird.src = 'images/bird.png';
+backGround.src = 'images/bg.png';
+floor.src = 'images/fg.png';
+pipeNorth.src = 'images/pipeNorth.png';
+pipeSouth.src = 'images/pipeSouth1.png';
 
-class App extends Component {
-  constructor(props){
-    super(props);
-      this.state = {
-        topPos: 335,
-        postPosLeft: 1000,
-        isAlive: false
-      }
-    this.handleJump = this.handleJump.bind(this);
-    this.createPost = this.createPost.bind(this);
-  }
+var fly = new Audio();
+var scor = new Audio();
+var lose = new Audio();
 
-  handleJump() {
-    var a = document.getElementById("flappyBird");
-    var aa = a.getBoundingClientRect();
-    console.log(aa);
-    this.setState({
-      isAlive: true,
-      topPos: this.state.topPos-50,
-    })    
-  }
+fly.src = 'sounds/jump.wav';
 
-  componentDidMount(){
-    this.timerID = setInterval(
-      () => this.tick(),
-      10
-    );
-    //this.createPost();
-  }
+var gap = 95;
+var constant;
+var birdX = 10;
+var birdY = 150;
+var velocityBirdY = 0.3;
+var accelerateY = 0.1;
 
-  tick(){
-    if(this.state.isAlive === true){
-    this.setState({
-      topPos: this.state.topPos+1,
-      postPosLeft: this.state.postPosLeft-1,
-    })}
-    if(this.state.topPos === 520){
-      this.setState({
-        topPos: 335,
-        postPosLeft: 1000,
-        isAlive: false
-      })
-    }
-    
-  }
+document.addEventListener('keydown', moveUp);
 
-
-
-  createPost() {
-    var newPost = [];
-    for(let i=0; i < 1; i++){
-      newPost.push(<div key={i} ><img src={post} alt=""/></div>);   
-    }
-    return newPost;
-  }
-
-
-  render() {
-    var styles = {
-      birdStyle: {
-        width: 50,
-        height: 50,
-      },
-      birdPos:{
-        position: 'absolute',
-        top: this.state.topPos,
-      },
-      btnJump:{
-        position: 'relative',
-        top: 200,
-      },
-      postStyle:{
-        position: 'absolute',
-        left: this.state.postPosLeft,
-       // marginLeft: 50
-      }
-    }
-    
-    
-
-    return (
-      <div className="App" onClick={this.handleJump}>
-        <div className="App-header" >
-          <div style={styles.postStyle}>
-            {this.createPost()}
-          </div>
-          
-          <div style={styles.birdPos}>
-            <img alt="" id="flappyBird" ref="fbird" src={bird} style = {styles.birdStyle} />
-          </div>
-          <button onClick={this.handleJump} style={styles.btnJump}>JUMP</button>
-        </div>
-      </div>
-    );
-  }
+function moveUp() {
+	velocityBirdY = -1;
+	birdY -= 50;
+	fly.play();
 }
 
-export default App;
+var pipe = [];
 
+pipe[0] = {
+	x: cvs.width,
+	y: 0
+};
+
+function draw() {
+	ctx.drawImage(backGround, 0, 0);
+
+	for (var i = 0; i < pipe.length; i++) {
+		constant = pipeNorth.height + gap;
+		ctx.drawImage(pipeNorth, pipe[i].x, pipe[i].y);
+		ctx.drawImage(pipeSouth, pipe[i].x, pipe[i].y + constant);
+		pipe[i].x--;
+		if (pipe[i].x == 125) {
+			pipe.push({
+				x: cvs.width,
+				y: Math.floor(Math.random() * pipeNorth.height) - pipeNorth.height
+			});
+		}
+		if (
+			(birdX + bird.width >= pipe[i].x &&
+				birdX <= pipe[i].x + pipeNorth.width &&
+				(birdY <= pipe[i].y + pipeNorth.height || birdY + bird.height >= pipe[i].y + constant)) ||
+			birdY + bird.height >= cvs.height - floor.height
+		) {
+			location.reload();
+		}
+	}
+
+	ctx.drawImage(floor, 0, cvs.height - floor.height);
+	ctx.drawImage(bird, birdX, birdY);
+	velocityBirdY += accelerateY;
+	birdY += velocityBirdY;
+	requestAnimationFrame(draw);
+}
+
+draw();

@@ -1,10 +1,12 @@
 # FlappyBird location based weather edition
 
 ## Description
-- [ This web system is flappy bird clone with additional function which can change web backgroud based on weather in your current location. Additionally it will present signup/login forms to track scores and display best of them ] Provide WEB system description in few sentences - its purpose, users, etc.
+- [ ] Provide WEB system description in few sentences - its purpose, users, etc.
+
+- [ ] This web system is flappy bird clone with additional function which can change web backgroud based on weather in your current location. Additionally it will present signup/login forms to track scores and display best of them
 
 ## Entity definition
-- [ User as an object ] 
+- [ ] User as an object
 - [ user ] Entity should have a name
 - [ ] Entity should have 3 mandatory attributes:
     - [ ] ID - depending on specific service this could be a number or string
@@ -31,6 +33,19 @@
 - [ ] Each method should have URI defined (use {id} as entity ID placeholder)
 - [ ] Should return all 4xx errors in unified format. Define format using `joi` language
 - [ ] Should return all 5xx errors in unified format. Define format using `joi` language
+
+## API definition
+
+By city name - API call:
+    api.openweathermap.org/data/2.5/weather?q={city name}
+    api.openweathermap.org/data/2.5/weather?q={city name},{country code}
+
+    GET /api/score/:scoreById?q={id}
+        404 score by id not found
+        404 id not found
+    GET /api/userID/:id?q={token}
+    POST /api/user/signup
+    POST /api/user/login
 
 ## UI definition
 - [ Main page: login/signup popup form, once logged bird  ] Define the structure of how visually the WEB system is going to look like
