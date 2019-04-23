@@ -7,11 +7,11 @@ var floor = new Image();
 var pipeNorth = new Image();
 var pipeSouth = new Image();
 
-bird.src = 'images/bird.png';
-backGround.src = 'images/bg.png';
-floor.src = 'images/fg.png';
-pipeNorth.src = 'images/pipeNorth.png';
-pipeSouth.src = 'images/pipeSouth1.png';
+bird.src = '/bird.png';
+backGround.src = '/bg.png';
+floor.src = '/fg.png';
+pipeNorth.src = '/pipeNorth.png';
+pipeSouth.src = '/pipeSouth1.png';
 
 var fly = new Audio();
 var scor = new Audio();
