@@ -6,6 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #2a547f;
 }
 
 code {
@@ -14,7 +15,10 @@ code {
 }
 
 .canvas {
-  position: relative;
-  display: flex;
-  margin: 50px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
