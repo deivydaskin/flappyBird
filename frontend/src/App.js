@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const weatherAPIKey = "033ef322bd432f252c5e2317ee618683";
+
 var cvs = document.getElementById("canvas");
 var ctx = cvs.getContext("2d");
 
@@ -11,7 +13,6 @@ var pipeSouth = new Image();
 var start = new Image();
 
 bird.src = "/images/bird.png";
-backGround.src = "/images/bg.png";
 floor.src = "/images/fg.png";
 pipeNorth.src = "/images/pipeNorth.png";
 pipeSouth.src = "/images/pipeSouth1.png";
@@ -34,10 +35,8 @@ var score = 0;
 
 var bestScores = [];
 
-var myReq;
-
-document.addEventListener("keydown", moveUp);
-document.addEventListener("touchstart", moveUp);
+var userName = "";
+var weather;
 
 function moveUp() {
   velocityBirdY = -1;
@@ -66,8 +65,8 @@ function gameOver() {
     score > parseInt(bestScores[2].score)
   )
     axios
-      .post("http://localhost:3000/api/scores", {
-        username: "testuoju",
+      .post("http://localhost:3001/api/scores", {
+        username: userName,
         score: score
       })
       .then(function(response) {
@@ -82,6 +81,9 @@ function gameOver() {
 
 function draw() {
   ctx.drawImage(backGround, 0, 0);
+
+  document.addEventListener("keydown", moveUp);
+  document.addEventListener("touchstart", moveUp);
 
   for (var i = 0; i < pipe.length; i++) {
     constant = pipeNorth.height + gap;
@@ -143,6 +145,8 @@ function draw() {
 }
 
 window.onload = function() {
+  getLocation();
+
   ctx.drawImage(backGround, 0, 0);
   constant = pipeNorth.height + gap;
   ctx.drawImage(pipeNorth, pipe.x, pipe.y);
@@ -153,7 +157,7 @@ window.onload = function() {
   ctx.drawImage(start, 95, 156);
 
   axios
-    .get("http://localhost:3000/api/scores")
+    .get("http://localhost:3001/api/scores")
     .then(res => {
       bestScores = res.data;
       ctx.font = "18px Roboto";
@@ -178,17 +182,65 @@ window.onload = function() {
     .catch(err => console.log(err));
 };
 
+function getBackground(x) {
+  console.log(x);
+  if (x == "clear sky") {
+    backGround.src = "/images/clearSky.png";
+  } else if (x == "few clouds") {
+    backGround.src = "/images/fewClouds.png";
+  } else if (x == "scattered clouds") {
+    backGround.src = "/images/scatteredClouds.png";
+  } else if (x == "broken clouds") {
+    backGround.src = "/images/brokenClouds.png";
+  } else if (x == "shower rain") {
+    backGround.src = "/images/showerRain.png";
+  } else if (x == "rain") {
+    backGround.src = "/images/rain.png";
+  } else if (x == "thunderstorm") {
+    backGround.src = "/images/thunderstorm.png";
+  } else if (x == "mist") {
+    backGround.src = "/images/mist.png";
+  } else {
+    backGround.src = "/images/clearSky.png";
+  }
+}
+
 document.getElementById("canvas").addEventListener(
   "click",
-  function() {
-    start_animation();
+  async function() {
+    userName = document.getElementById("userName").value;
+    if (!userName) {
+      alert("Enter your username!");
+    } else {
+      start_animation();
+    }
   },
   false
 );
-document.getElementById("canvas").addEventListener(
-  "touchstart",
-  function() {
-    start_animation();
-  },
-  false
-);
+
+function getLocation() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.watchPosition(
+      function success(position) {
+        let url1 = `http://api.openweathermap.org/data/2.5/weather?lat=${
+          position.coords.latitude
+        }&lon=${position.coords.longitude}&units=metric&APPID=${weatherAPIKey}`;
+
+        axios
+          .get(url1)
+          .then(res => {
+            getBackground(res.data.weather[0].description);
+          })
+          .catch(err => console.log(err));
+      },
+      function error(error_message) {
+        console.error(
+          "An error has occured while retrieving location",
+          error_message
+        );
+      }
+    );
+  } else {
+    console.log("geolocation is not enabled on this browser");
+  }
+}

@@ -1,24 +1,10 @@
-const express = require('express');
-const router =  express.Router();
+const express = require("express");
+const router = express.Router();
 
-const Score = require('../../models/Score');
+const ScoreController = require("../../controller/scores");
 
-router.get('/', (req, res) => {
-    Score
-        .find()
-        .sort({ date: -1 })
-        .then(scores => res.json(scores))
-});
+router.route("/").get(ScoreController.getScores);
 
-router.post('/', (req, res) => {
-    const newScore = new Score({
-        username: req.body.username,
-        score: req.body.score,
-    });
-    
-    newScore
-    .save()
-    .then(score => res.json(score));      
-});
+router.route("/").post(ScoreController.addScore);
 
 module.exports = router;

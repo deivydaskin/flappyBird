@@ -2,8 +2,11 @@
   "name": "flappybird",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://deivydaskin.github.io/flappyBird/",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d frontend/dist",
     "lint": "eslint webpack.config.js backend frontend/src/**/*.js*",
     "build": "webpack --mode production",
     "watch-webpack": "webpack --watch --mode development",
@@ -33,10 +36,11 @@
     "webpack-hot-middleware": "^2.24.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "gh-pages": "^2.0.1",
     "mongoose": "^5.5.0",
-    "axios": "^0.18.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   }
 }

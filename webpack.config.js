@@ -1,23 +1,24 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
 
 module.exports = {
-  entry: path.join(__dirname, 'frontend', 'src', 'App.js'),
+  entry: path.join(__dirname, "frontend", "src", "App.js"),
   output: {
-    path: path.join(__dirname, 'frontend', 'dist'),
-    filename: 'bundle.js',
+    path: path.join(__dirname, "frontend", "dist"),
+    filename: "bundle.js"
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        
-      }    
+        exclude: /node_modules/
+      }
     ]
   },
-  plugins: [new HtmlWebpackPlugin({
-    filename: 'index.html',
-    template: path.join('.', 'frontend', 'src', 'index.html'),
-  })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: path.join(".", "frontend", "src", "index.html")
+    })
+  ]
 };

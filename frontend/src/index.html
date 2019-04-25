@@ -12,7 +12,14 @@
     <link rel="stylesheet" type="text/css" href="index.css" />
   </head>
   <body>
-    <canvas class="canvas" id="canvas" width="288" height="512"> </canvas>
-    <script src="App.js"></script>
+    <div class="container">
+      <h2>Your username:</h2>
+      <input class="userName" id="userName" placeholder="Enter your username" />
+      <canvas class="canvas" id="canvas" width="288" height="512"> </canvas>
+      <button class="restartBtn" onclick="window.location.reload();">
+        Restart
+      </button>
+    </div>
+    <script src="bundle.js"></script>
   </body>
 </html>
