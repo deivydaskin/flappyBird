@@ -24,7 +24,7 @@ var scor = new Audio();
 fly.src = "sounds/jump.wav";
 scor.src = "sounds/score.mp3";
 
-var gap = 95;
+var gap = 125;
 var constant;
 var birdX = 10;
 var birdY = 150;
@@ -40,7 +40,7 @@ var weather;
 
 function moveUp() {
   velocityBirdY = -1;
-  birdY -= 40;
+  birdY -= 20;
   fly.currentTime = 0;
   fly.play();
 }
