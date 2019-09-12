@@ -12,7 +12,7 @@
     "watch-webpack": "webpack --watch --mode development",
     "watch-nodemon": "nodemon --watch backend backend",
     "dev": "npm-run-all --parallel watch-webpack watch-nodemon",
-    "start": "nodemon backend"
+    "start": "node backend"
   },
   "author": "",
   "license": "ISC",
