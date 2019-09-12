@@ -31,12 +31,11 @@ let birdY = 150;
 let velocityBirdY = 0.3;
 const accelerateY = 0.1;
 
-let score = 0;
+let currentScore = 0;
 
-const bestScores = [];
+let bestScores = [];
 
 let userName = '';
-let weather;
 
 function moveUp() {
   velocityBirdY = -1;
@@ -58,14 +57,14 @@ function start_animation() {
 
 function gameOver() {
   if (
-    score > parseInt(bestScores[0].score)
-    || score > parseInt(bestScores[1].score)
-    || score > parseInt(bestScores[2].score)
+    currentScore > parseInt(bestScores[0].score)
+    || currentScore > parseInt(bestScores[1].score)
+    || currentScore > parseInt(bestScores[2].score)
   ) {
     axios
-      .post('https://flappybirdweather.herokuapp.com/api/scores', {
+      .post('api/scores', {
         username: userName,
-        score,
+        score: currentScore,
       })
       .then((response) => {
         console.log(response);
@@ -105,7 +104,7 @@ function draw() {
     }
 
     if (pipe[i].x == 5) {
-      score++;
+      currentScore++;
       scor.play();
     }
   }
@@ -118,8 +117,7 @@ function draw() {
   ctx.fillStyle = '#000';
 
   ctx.font = '22px Roboto';
-  ctx.fillText(`Score : ${score}`, 10, cvs.height - 40);
-
+  ctx.fillText(`Score : ${currentScore}`, 10, cvs.height - 40);
   ctx.font = '18px Roboto';
   ctx.fillText('Best Scores:', cvs.width - 115, cvs.height - 80);
   ctx.font = '14px Roboto';
@@ -155,7 +153,7 @@ window.onload = function () {
   ctx.drawImage(start, 95, 156);
 
   axios
-    .get('https://flappybirdweather.herokuapp.com/api/scores')
+    .get('api/scores')
     .then((res) => {
       bestScores = res.data;
 
