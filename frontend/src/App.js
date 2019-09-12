@@ -160,6 +160,7 @@ window.onload = function () {
     .get('https://flappybirdweather.herokuapp.com/api/scores')
     .then((res) => {
       bestScores = res.data;
+
       ctx.font = '18px Roboto';
       ctx.fillText('Best Scores:', cvs.width - 115, cvs.height - 80);
       ctx.font = '14px Roboto';
@@ -183,7 +184,6 @@ window.onload = function () {
 };
 
 function getBackground(x) {
-  console.log(x);
   if (x == 'clear sky') {
     backGround.src = '/images/clearSky.png';
   } else if (x == 'few clouds') {
@@ -223,7 +223,7 @@ function getLocation() {
   if ('geolocation' in navigator) {
     navigator.geolocation.watchPosition(
       (position) => {
-        const url1 = `https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${weatherAPIKey}`;
+        const url1 = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${weatherAPIKey}`;
 
         axios
           .get(url1)
