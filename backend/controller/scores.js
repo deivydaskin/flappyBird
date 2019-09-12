@@ -1,5 +1,5 @@
-const Score = require("../models/Score");
-const Joi = require("@hapi/joi");
+const Joi = require('@hapi/joi');
+const Score = require('../models/Score');
 
 const schema = Joi.object().keys({
   username: Joi.string()
@@ -10,25 +10,22 @@ const schema = Joi.object().keys({
   score: Joi.number()
     .integer()
     .max(1000)
-    .required()
+    .required(),
 });
 
 module.exports = {
   addScore: async (req, res) => {
-    const result = Joi.validate(
-      { username: req.body.username, score: req.body.score },
-      schema
-    );
+    const result = Joi.validate({ username: req.body.username, score: req.body.score }, schema);
     if (result.error === null) {
       const newScore = new Score({
         username: req.body.username,
-        score: req.body.score
+        score: req.body.score,
       });
 
       newScore.save().then(score => res.json(score));
 
       Score.findOneAndDelete({}, { sort: { score: 1 } })
-        .collation({ locale: "en_US", numericOrdering: true })
+        .collation({ locale: 'en_US', numericOrdering: true })
         .then(a => console.log(a))
         .catch(err => console.log(err));
     } else {
@@ -39,9 +36,9 @@ module.exports = {
   getScores: async (req, res) => {
     Score.find()
       .sort({ score: -1 })
-      .collation({ locale: "en_US", numericOrdering: true })
+      .collation({ locale: 'en_US', numericOrdering: true })
       .limit(3)
       .then(scores => res.json(scores))
       .catch(err => res.send(err));
-  }
+  },
 };
