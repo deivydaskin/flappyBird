@@ -65,7 +65,7 @@ function gameOver() {
     || score > parseInt(bestScores[2].score)
   ) {
     axios
-      .post('http://localhost:3001/api/scores', {
+      .post('https://flappybirdweather.herokuapp.com/api/scores', {
         username: userName,
         score,
       })
@@ -157,7 +157,7 @@ window.onload = function () {
   ctx.drawImage(start, 95, 156);
 
   axios
-    .get('http://localhost:3001/api/scores')
+    .get('https://flappybirdweather.herokuapp.com/api/scores')
     .then((res) => {
       bestScores = res.data;
       ctx.font = '18px Roboto';
@@ -223,7 +223,7 @@ function getLocation() {
   if ('geolocation' in navigator) {
     navigator.geolocation.watchPosition(
       (position) => {
-        const url1 = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${weatherAPIKey}`;
+        const url1 = `https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${weatherAPIKey}`;
 
         axios
           .get(url1)
