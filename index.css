@@ -14,11 +14,34 @@ code {
     monospace;
 }
 
-.canvas {
-  position: absolute;
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
+  justify-content: center;
+  align-content: center;
+}
+
+h2 {
+  align-self: center;
+  margin: auto;
+}
+
+.userName {
+  align-self: center;
+  width: 284px;
+}
+
+.canvas {
+  align-self: center;
+}
+
+.restartBtn {
+  align-self: center;
+  width: 288px;
 }
