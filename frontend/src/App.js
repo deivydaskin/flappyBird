@@ -12,11 +12,11 @@ const pipeNorth = new Image();
 const pipeSouth = new Image();
 const start = new Image();
 
-bird.src = '/images/bird.png';
-floor.src = '/images/fg.png';
-pipeNorth.src = '/images/pipeNorth.png';
-pipeSouth.src = '/images/pipeSouth1.png';
-start.src = '/images/start.png';
+bird.src = 'images/bird.png';
+floor.src = 'images/fg.png';
+pipeNorth.src = 'images/pipeNorth.png';
+pipeSouth.src = 'images/pipeSouth1.png';
+start.src = 'images/start.png';
 
 const fly = new Audio();
 const scor = new Audio();
@@ -52,10 +52,8 @@ pipe[0] = {
   y: 0,
 };
 
-let id = null;
-
 function start_animation() {
-  id = requestAnimationFrame(draw);
+  requestAnimationFrame(draw);
 }
 
 function gameOver() {
@@ -185,31 +183,30 @@ window.onload = function () {
 
 function getBackground(x) {
   if (x == 'clear sky') {
-    backGround.src = '/images/clearSky.png';
+    backGround.src = 'images/clearSky.png';
   } else if (x == 'few clouds') {
-    backGround.src = '/images/fewClouds.png';
+    backGround.src = 'images/fewClouds.png';
   } else if (x == 'scattered clouds') {
-    backGround.src = '/images/scatteredClouds.png';
+    backGround.src = 'images/scatteredClouds.png';
   } else if (x == 'broken clouds') {
-    backGround.src = '/images/brokenClouds.png';
+    backGround.src = 'images/brokenClouds.png';
   } else if (x == 'shower rain') {
-    backGround.src = '/images/showerRain.png';
+    backGround.src = 'images/showerRain.png';
   } else if (x == 'rain') {
-    backGround.src = '/images/rain.png';
+    backGround.src = 'images/rain.png';
   } else if (x == 'thunderstorm') {
-    backGround.src = '/images/thunderstorm.png';
+    backGround.src = 'images/thunderstorm.png';
   } else if (x == 'mist') {
-    backGround.src = '/images/mist.png';
+    backGround.src = 'images/mist.png';
   } else {
-    backGround.src = '/images/clearSky.png';
+    backGround.src = 'images/clearSky.png';
   }
 }
 
 document.getElementById('canvas').addEventListener(
   'click',
   async () => {
-    userName = document.getElementById('userName');
-    console.log(userName);
+    userName = document.getElementById('userName').value;
     if (!userName) {
       alert('Enter your username!');
     } else {
