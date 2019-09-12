@@ -1,6 +1,10 @@
 # FlappyBird location based weather edition
 
-## Instructions
+## Check this app
+https://flappybirdweather.herokuapp.com/
+## OR
+
+## Starting Instructions
 
 git clone or download zip
 open in IDE
