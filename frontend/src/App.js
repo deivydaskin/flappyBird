@@ -208,7 +208,7 @@ function getBackground(x) {
 document.getElementById('canvas').addEventListener(
   'click',
   async () => {
-    userName = document.getElementsById('userName');
+    userName = document.getElementById('userName');
     console.log(userName);
     if (!userName) {
       alert('Enter your username!');
